@@ -4,9 +4,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class BasePage:
-    # CSS : div[href="https://123]
-    # XPATH: .//div
-    # XPATH (//div)
 
     def __init__(self, driver):
         self.driver = driver
@@ -40,12 +37,21 @@ class BasePage:
         return element.text
 
     def _wait_presence_of_element_located(self, locator):
-        return WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, locator)))
+        locator_type = self._define_type_of_locator(locator)
+        return WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((locator_type, locator)))
 
-    # Check if locator type required in progress
     def wait_text_to_be_present_in_element(self, locator, text):
+        locator_type = self._define_type_of_locator(locator)
         return WebDriverWait(self.driver, 10).until(EC.text_to_be_present_in_element
-                                                    ((By.XPATH, locator), text_=text))
+                                                    ((locator_type, locator), text_=text))
 
     def is_element_present(self, locator):
-        return len(self.driver.find_elements(By.XPATH, locator)) > 0
+        locator_type = self._define_type_of_locator(locator)
+        return len(self.driver.find_elements(locator_type, locator)) > 0
+
+    @staticmethod
+    def _define_type_of_locator(locator):
+        if '//' in locator:
+            return By.XPATH
+        else:
+            return By.CSS_SELECTOR

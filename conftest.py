@@ -27,7 +27,7 @@ def edit_account_page(chromedriver):
     return EditAccountPage(chromedriver)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture()
 def main_page_navigate(main_page):
     main_page.open_page()
 
