@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+import allure
 
 
 class MainPage(BasePage):
@@ -24,16 +25,20 @@ class MainPage(BasePage):
     def click_login(self):
         self.click(self.LOGIN_BUTTON_LOCATOR)
 
+    @allure.step
     def login(self, username, password):
         self.enter_username(username)
         self.enter_password(password)
         self.click_login()
 
+    @allure.step
     def edit_account(self):
         self.click(self.EDIT_ACCOUNT_LOCATOR)
 
-    def click_on_duck(self):
+    @allure.step
+    def click_on_item(self):
         self.click(self.GREEN_DUCK_LOCATOR)
 
+    @allure.step
     def click_on_cart(self):
         self.click(self.TO_CART_LOCATOR)

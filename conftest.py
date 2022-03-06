@@ -1,3 +1,4 @@
+import allure
 import mysql.connector
 import pytest
 from selenium import webdriver
@@ -57,3 +58,11 @@ def cart_page(chromedriver):
 @pytest.fixture()
 def api_service():
     return APIService()
+
+
+@pytest.fixture(autouse=True)
+def do_screenshot_if_test_if_failed(request, chromedriver):
+    yield
+    screenshot_name = f"{request.node.name}.png"
+    chromedriver.save_screenshot(screenshot_name)
+    allure.attach.file(screenshot_name, attachment_type=allure.attachment_type.PNG)
