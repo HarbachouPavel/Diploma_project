@@ -7,8 +7,8 @@ from pages.cart_page import CartPage
 from pages.edit_account_page import EditAccountPage
 from pages.main_page import MainPage
 from pages.product_page import ProductPage
-from services.api_service import APIService
-from services.sql_service import SQLService
+from api.api_service import APIService
+from db.sql_service import SQLService
 
 
 @pytest.fixture()
@@ -61,7 +61,7 @@ def api_service():
 
 
 @pytest.fixture(autouse=True)
-def do_screenshot_if_test_if_failed(request, chromedriver):
+def do_screenshot_in_end_of_test(request, chromedriver):
     yield
     screenshot_name = f"{request.node.name}.png"
     chromedriver.save_screenshot(screenshot_name)

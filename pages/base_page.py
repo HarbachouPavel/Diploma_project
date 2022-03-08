@@ -4,7 +4,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class BasePage:
-
     def __init__(self, driver):
         self.driver = driver
 
@@ -24,16 +23,14 @@ class BasePage:
         return element
 
     def clear_input_line(self, locator):
-        self._wait_presence_of_element_located(locator)
-        element = self._find_element(locator)
+        element = self._wait_presence_of_element_located(locator)
         element.clear()
 
     def full_screen(self):
         self.driver.maximize_window()
 
     def return_text_of_element(self, locator):
-        self._wait_presence_of_element_located(locator)
-        element = self._find_element(locator)
+        element = self._wait_presence_of_element_located(locator)
         return element.text
 
     def _wait_presence_of_element_located(self, locator):
@@ -47,8 +44,8 @@ class BasePage:
 
     def is_element_present(self, locator):
         locator_type = self._define_type_of_locator(locator)
-        return len(self.driver.find_elements(locator_type, locator)) > 0
-
+        a = len(self.driver.find_elements(locator_type, locator)) > 0
+        return a
     @staticmethod
     def _define_type_of_locator(locator):
         if '//' in locator:

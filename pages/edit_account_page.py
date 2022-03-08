@@ -12,13 +12,8 @@ class EditAccountPage(BasePage):
     def click_save_button(self):
         self.click(self.SAVE_BUTTON_LOCATOR)
 
-    @allure.step
+    @allure.step('change_first_name')
     def change_first_name(self, changed_first_name: str):
         self.clear_input_line(self.USER_FIRST_NAME_FIELD_LOCATOR)
         self.write_first_name(changed_first_name)
         self.click_save_button()
-
-    @staticmethod
-    @allure.step
-    def search_for_changed_name_in_list(list_of_returned_elements, changed_name):
-        return changed_name == list_of_returned_elements[0][0]

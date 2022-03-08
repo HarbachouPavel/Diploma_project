@@ -1,11 +1,13 @@
+from db.user_data import USER_DATA, USERNAME
+
+
 class TestAPIPetStore:
-    USERNAME = 'api_client_username'
-    CHANGED_CLIENTS_FIRSTNAME = 'changed_client_first_name'
-    ENDPOINT = f'{USERNAME}'
 
     def test_is_username_changed(self, api_service):
-        api_service.create_user()
-        api_service.receive_user_data(self.ENDPOINT)
-        api_service.change_clients_firstname(self.ENDPOINT)
-        assert api_service.is_clients_firstname_had_changed(self.CHANGED_CLIENTS_FIRSTNAME, self.USERNAME), \
-            'User name must be changed in Database'
+        api_service.create_user(USER_DATA)
+        api_service.receive_user_data(USERNAME)
+        update_user_data = USER_DATA.copy()
+        update_user_data["firstName"] = "new_client_firstname"
+        api_service.update_client(update_user_data, USERNAME)
+        actual_user_data = api_service.receive_user_data(USERNAME)
+        assert actual_user_data == update_user_data,  'User name must be changed in Database'
