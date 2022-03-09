@@ -14,29 +14,28 @@ class MainPage(BasePage):
     def open_page(self):
         self.open_url(self.URL)
 
-    def enter_username(self, username):
+    def enter_username(self, username: str):
         self.enter_text(self.ENTER_USERNAME_LOCATOR, username)
 
-    def enter_password(self, password):
+    def enter_password(self, password: str):
         self.enter_text(self.ENTER_PASSWORD_LOCATOR, password)
 
     def click_login(self):
         self.click(self.LOGIN_BUTTON_LOCATOR)
 
     @allure.step('login')
-    def login(self, username, password):
+    def login(self, username: str, password: str):
         self.enter_username(username)
         self.enter_password(password)
         self.click_login()
 
-    @allure.step('edit_account')
     def edit_account(self):
         self.click(self.EDIT_ACCOUNT_LOCATOR)
 
-    @allure.step('click_on_item')
+    @allure.step('go to item page')
     def click_on_item(self, color="Green"):
         self.click(self.GREEN_DUCK_LOCATOR.format(color))
 
-    @allure.step('click_on_cart')
+    @allure.step('go to cart page')
     def click_on_cart(self):
         self.click(self.TO_CART_LOCATOR)

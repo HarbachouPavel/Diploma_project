@@ -3,17 +3,27 @@ import mysql.connector
 import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from pages.cart_page import CartPage
 from pages.edit_account_page import EditAccountPage
 from pages.main_page import MainPage
 from pages.product_page import ProductPage
 from api.api_service import APIService
-from db.sql_service import SQLService
+from sql_service.sql_service import SQLService
 
 
 @pytest.fixture()
 def chromedriver():
     driver = webdriver.Chrome(ChromeDriverManager().install())
+    yield driver
+    driver.close()
+
+
+@pytest.fixture()
+def chromedriver_headless():
+    options = Options()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
     yield driver
     driver.close()
 
@@ -31,6 +41,7 @@ def edit_account_page(chromedriver):
 @pytest.fixture()
 def main_page_navigate(main_page):
     main_page.open_page()
+    main_page.maximize_window()
 
 
 @pytest.fixture(scope='session')
@@ -60,7 +71,7 @@ def api_service():
     return APIService()
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture()
 def do_screenshot_in_end_of_test(request, chromedriver):
     yield
     screenshot_name = f"{request.node.name}.png"
