@@ -13,7 +13,7 @@ class CartPage(BasePage):
     ITEM_IN_CART_LOCATOR = '//a[@class="image-wrapper shadow"]'
     TOTAL_PRICE_LOCATOR = '//td[@class="sum"]'
 
-    def _send_new_quantity_in_quantity_field(self, new_quantity: int):
+    def _send_new_quantity_in_field(self, new_quantity: int):
         self.clear_input_line(self.INPUT_QUANTITY_OF_ITEMS_LOCATOR)
         self.enter_text(self.INPUT_QUANTITY_OF_ITEMS_LOCATOR, new_quantity)
 
@@ -49,5 +49,5 @@ class CartPage(BasePage):
 
     @allure.step('change quantity of item')
     def change_quantity_of_item(self, new_quantity: int):
-        self._send_new_quantity_in_quantity_field(new_quantity)
+        self._send_new_quantity_in_field(new_quantity)
         self._click_update_button()
